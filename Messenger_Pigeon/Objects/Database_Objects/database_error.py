@@ -24,7 +24,7 @@ class ScraperException(DataBase_Object, Exception):
 
 
     def unique_hash(self):
-        hash_obj = hashlib.md5((self.causing_error + self.exception_class).encode())
+        hash_obj = hashlib.md5((self.causing_error + self.why_thrown).encode())
         return hash_obj.hexdigest()
 
 
