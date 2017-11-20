@@ -1,0 +1,108 @@
+"[2015, 2016]",Acura,TLX
+[2016],Audi,A3
+"[2009, 2010]",Audi,A4
+[2015],Audi,Q7
+[2011],BMW,1 Series
+"[2008, 2009, 2010, 2011]",BMW,3 Series
+[2014],BMW,4 Series
+"[2008, 2012]",BMW,5 Series
+"[2007, 2008, 2011]",BMW,X3
+"[2011, 2012]",BMW,X5
+"[2008, 2009, 2010, 2011]",Buick,Enclave
+[2007],Buick,LaCrosse
+[2008],Buick,Lucerne
+"[2013, 2015]",Cadillac,ATS
+"[2015, 2016]",Cadillac,Escalade
+[2013],Cadillac,SRX
+[2013],Chevrolet,Camaro
+[2015],Chevrolet,Colorado
+[2016],Chevrolet,Corvette
+"[2011, 2012, 2013]",Chevrolet,Cruze
+"[2010, 2011]",Chevrolet,Equinox
+[2009],Chevrolet,HHR
+[2010],Chevrolet,Impala
+[2016],Chevrolet,Malibu Limited
+"[2011, 2012, 2015, 2016]",Chevrolet,Silverado 2500HD
+[2015],Chevrolet,Silverado 3500HD
+[2012],Chevrolet,Sonic
+"[2008, 2014, 2015, 2016]",Chevrolet,Suburban
+"[2014, 2015, 2016]",Chevrolet,Tahoe
+"[2009, 2010, 2011, 2013]",Chevrolet,Traverse
+[2016],Chevrolet,Volt
+[2015],Chrysler,200
+"[2013, 2014]",Chrysler,300
+[],Chrysler,PT Cruiser
+"[2008, 2009, 2010, 2011, 2012]",Chrysler,Town & Country
+[2015],Dodge,Challenger
+"[2014, 2015]",Dodge,Charger
+[2013],Dodge,Dart
+"[2012, 2013, 2015]",Dodge,Durango
+"[2008, 2009, 2010, 2011, 2012]",Dodge,Grand Caravan
+"[2012, 2013, 2015]",Dodge,Journey
+[2007],Dodge,Ram 2500
+"[2012, 2013, 2015]",Fiat,500
+[2014],Fiat,500L
+[2013],Ford,Escape
+[2012],Ford,Expedition
+[2016],Ford,Explorer
+"[2008, 2010, 2014]",Ford,F-250
+"[2008, 2013]",Ford,F-350
+"[2011, 2012, 2013, 2014]",Ford,Fiesta
+"[2012, 2013, 2014, 2015, 2016]",Ford,Focus
+"[2015, 2016]",Ford,Mustang
+[2010],Ford,Taurus
+"[2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014]",GMC,Acadia
+[2015],GMC,Canyon
+"[2011, 2012, 2015, 2016]",GMC,Sierra 2500HD
+[2015],GMC,Sierra 3500HD
+"[2010, 2011]",GMC,Terrain
+"[2014, 2015, 2016]",GMC,Yukon
+"[2008, 2014, 2015, 2016]",GMC,Yukon XL
+[2011],Honda,Accord Crosstour
+[2016],Honda,Civic
+[2016],Hyundai,Genesis
+[2011],Hyundai,Sonata
+[2013],Infiniti,JX
+[2014],Infiniti,QX60
+"[2014, 2015]",Jeep,Cherokee
+"[2011, 2013, 2014, 2016]",Jeep,Grand Cherokee
+[2008],Jeep,Liberty
+[2015],Jeep,Renegade
+[2015],Jeep,Wrangler
+[2009],Kia,Rondo
+"[2015, 2016]",Lincoln,MKC
+[2013],Lincoln,MKS
+[2016],Mazda,Mazda3
+[2008],Mazda,Mazda5
+[2015],Mercedes-Benz,C-Class
+"[2014, 2015]",Mercedes-Benz,GL-Class
+[2011],Mercedes-Benz,M-Class
+[2016],Mercedes-Benz,GLE
+[2015],Mercedes-Benz,S-Class
+"[2007, 2008, 2009, 2010, 2011, 2015]",Mini,Cooper
+[2012],Mini,Countryman
+[2012],Nissan,Juke
+[2016],Nissan,Murano
+"[2013, 2014]",Nissan,Pathfinder
+[2014],Nissan,Rogue
+[2013],Nissan,Sentra
+"[2014, 2016]",Ram,1500
+"[2012, 2014, 2015]",Ram,2500
+[],Saturn,Outlook
+[2009],Subaru,Impreza
+[2008],Subaru,Outback
+[2015],Subaru,WRX/STi
+[2014],Tesla,Model S
+[2016],Tesla,Model X
+[2016],Toyota,Tacoma
+[2014],Volkswagen,Beetle
+[2010],Volkswagen,CC
+"[2010, 2016]",Volkswagen,Golf
+[2015],Volkswagen,Golf SportWagen
+"[2012, 2013]",Volkswagen,GTI
+"[2010, 2014, 2015, 2016]",Volkswagen,Jetta
+"[2007, 2014]",Volkswagen,Passat
+"[2011, 2013]",Volkswagen,Tiguan
+[2014],Volkswagen,Touareg
+[2015],Volvo,S60
+[2016],Volvo,XC90
