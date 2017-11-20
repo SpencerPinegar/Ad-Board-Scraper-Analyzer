@@ -12,17 +12,19 @@ class ScraperException(DataBase_Object, Exception):
 
     causing_error: str = None
     why_thrown: str = ''
+    exception_class: str = ''
     seen = 1
 
     def __init__(self, e, why_thrown, exception_class):
         Exception.__init__(self)
+        self.exception_class = str(exception_class)
         self.causing_error = str(e)
         self.why_thrown = why_thrown
         self.seen = 1
 
 
     def unique_hash(self):
-        hash_obj = hashlib.md5((self.causing_error + self.why_thrown).encode())
+        hash_obj = hashlib.md5((self.causing_error + self.exception_class).encode())
         return hash_obj.hexdigest()
 
 
