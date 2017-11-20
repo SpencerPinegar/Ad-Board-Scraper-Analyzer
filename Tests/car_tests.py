@@ -11,8 +11,6 @@ class CAR_TESTER(Generic_Test_Class):
     def setUp(self):
         super().setUp()
 
-    def test_basic_car_build(self):
-        self.assertEqual(self.test_car.price, 3)
 
     def test_ad_identifer_as_empty_string(self):
         the_car = car.Car(self.unique_id,
@@ -28,15 +26,15 @@ class CAR_TESTER(Generic_Test_Class):
                            'yellow',
                            'brown',
                            'manuel',
-                           '5.7',
+                            5.7,
                            'diesel',
                            'fair',
                            'excellent',
                            'AWD',
-                           '8',
-                           '4',
+                            8,
+                            4,
                            'THIS IS A TEST',
-                           3,
+                            3,
                            False)
         self.assertEqual(the_car.ad_identifier, '')
 

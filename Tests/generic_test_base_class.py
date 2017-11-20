@@ -17,3 +17,7 @@ class Generic_Test_Class(unittest.TestCase):
                                                 )
 
         self.connection_object.open_connection()
+
+
+    def unique_id(self):
+        return str(uuid.uuid4())

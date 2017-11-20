@@ -26,7 +26,7 @@ def normalize(item):
     if str(item).lower() == 'not specified':
         return ''
     else:
-        return item
+        return str(item)
 
 
 class Car(DataBase_Object):
@@ -411,7 +411,7 @@ class Car(DataBase_Object):
         returns a normilized model type for the car as a string
         :return: 
         """
-        return self.model.lower().replace(' ', '').replace('-', '')
+        return str(self.model).lower().replace(' ', '').replace('-', '')
 
     def normalize_fuel(self, fuel_type):
         """
@@ -435,8 +435,8 @@ class Car(DataBase_Object):
         Sets the make as the correct MAKE enum type
         :param make: the make as a string
         """
+        make = str(make).upper().replace(' ', '_').replace('-', '_')
         try:
-            make = str(make).upper().replace(' ', '_').replace('-', '_')
             self.make = Make[make]
         except KeyError:
             if self.not_none(make) and make.upper() != 'NOT_SPECIFIED':
@@ -468,7 +468,7 @@ class Car(DataBase_Object):
         sets the transmission as the proper Transmission type
         :param transmission: the transmission as a type
         """
-        tranny = transmission.upper()
+        tranny = str(transmission).upper()
         try:
             self.transmission = Transmission[tranny]
         except KeyError:
@@ -510,7 +510,7 @@ class Car(DataBase_Object):
         sets the drive_type as the proper Drive_Type enum
         :param drive: the drive type as a string
         """
-        drive = drive.upper()
+        drive = str(drive).upper()
         drive = drive.replace(' ', '_')
         drive = drive.replace('-', '_')
         drive = drive.replace('4', 'FOUR')
