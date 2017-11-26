@@ -28,7 +28,7 @@ class KSL_SCRAPER(object):
     data_base = None  # The database object to be uploaded too
     queue_table = 'Unprocessed_Listings'  # the table in the db that hold the listings to be processed
 
-    max_attempts = 3  # how many times you want to attempt to process each listing
+    max_attempts = 2  # how many times you want to attempt to process each listing
 
     got_new_listings = False  # A field determining if all the new listings posted were seen or not
     check_dealerships = False  # Do you want the listing pages to include listing posted by dealerships
