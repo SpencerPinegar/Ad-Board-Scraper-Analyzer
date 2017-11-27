@@ -140,10 +140,10 @@ class Car(DataBase_Object):
             try:
                 self.get_carfax()
                 return
-            except:
+            except Exception as e:
                 try:
                     self.get_bluebook_value()
-                except:
+                except Exception as e:
                     return
         else:
             return
@@ -300,8 +300,8 @@ class Car(DataBase_Object):
                                          backup_xpath='//select[@id="ModelId"'
                                          )
             GS.next_page(driver=driver,
-                         xpath='//input[@type="submit" and @value="Next"]',
-                         next_element_xpath='//input[@id="Mileage"]'
+                         el_locator=('xpath', '//input[@type="submit" and @value="Next"]'),
+                         next_el_locator=('xpath', '//input[@id="Mileage"]')
                          )
             GS.enter_text(driver=driver,
                           locator=('name', 'Mileage'),
@@ -331,8 +331,8 @@ class Car(DataBase_Object):
                                          backup_xpath='//select[@id="NextVehicle"]'
                                          )
             GS.next_page(driver=driver,
-                         xpath='//input[@type="submit" and @value="Show My Car Value"]',
-                         next_element_xpath='//div[@id="js-promo-popup"]/div/div[2]/div[1]/div[3]/p'
+                         el_locator=('xpath', '//input[@type="submit" and @value="Show My Car Value"]'),
+                         next_el_locator=('xpath', '//div[@id="js-promo-popup"]/div/div[2]/div[1]/div[3]/p')
                          )
             price = BB.grab_price(driver=driver)
             driver.close()
@@ -370,10 +370,11 @@ class Car(DataBase_Object):
             finally:
                 try:
                     GS.next_page(driver=driver,
-                                 xpath='//input[@id="btnGetCarfax"]',
-                                 next_element_xpath=None,
+                                 el_locator=('xpath', '//input[@id="btnGetCarfax"]'),
+                                 next_el_locator=('css selector', 'div.vehicle-info__trade > div:nth-child(2) > h2.vehicle-info__value'),
                                  the_long_wait=False
                                  )
+
                     price = driver.find_element_by_css_selector(
                         'div.vehicle-info__trade > div:nth-child(2) > h2.vehicle-info__value').text
                     price = re.sub('[^0-9]', '', price)
