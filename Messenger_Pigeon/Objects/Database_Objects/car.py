@@ -269,7 +269,7 @@ class Car(DataBase_Object):
             self.make_label = ''
             return
         try:
-            driver = GW.Requester.create_chrome_driver(headless=False)
+            driver = GW.Requester.create_chrome_driver()
             driver.get('http://www.autobytel.com/kelley-blue-book/')
             driver.maximize_window()
             GS.drop_down_select_and_wait(driver=driver,
@@ -353,7 +353,7 @@ class Car(DataBase_Object):
         if self.year > 1995 and self.vin != '':
             driver = None
             try:
-                driver = GW.Requester.create_chrome_driver(headless=False)
+                driver = GW.Requester.create_chrome_driver()
                 driver.get('http://www.carfax.com/value/')
                 driver.maximize_window()
                 GS.enter_text(driver=driver,
@@ -371,7 +371,7 @@ class Car(DataBase_Object):
                 try:
                     GS.next_page(driver=driver,
                                  xpath='//input[@id="btnGetCarfax"]',
-                                 next_element_xpath='//section/div/section/div/div[3]/div/div[1]/div[3]/div[2]/h2',
+                                 next_element_xpath=None,
                                  the_long_wait=False
                                  )
                     price = driver.find_element_by_css_selector(
