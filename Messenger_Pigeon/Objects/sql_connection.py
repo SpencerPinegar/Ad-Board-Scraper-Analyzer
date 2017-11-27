@@ -1,4 +1,3 @@
-import zlib
 
 import pymysql
 from Messenger_Pigeon.Objects.Database_Objects.database_object import DataBase_Object
@@ -372,15 +371,15 @@ class SQL_Connection(object):
         """
         SQL_Connection.is_sql_compatible(the_object)
         upload_data_dict = the_object.database_dict()
-        for key in the_object.fields_to_compress:
-            try:
-                uncompressed_value = upload_data_dict[key]
-                compressed_value = SQL_Connection.compress_string(uncompressed_value)
-                upload_data_dict[key] = compressed_value
-            except KeyError:
-                raise ValueError(
-                    f'unable to find {key} in {type(the_object).__name__} database dict. Modify the fields_to_compress instance variable'
-                    f'or the database_dict method so key names align')
+        # for key in the_object.fields_to_compress:
+        #     try:
+        #         uncompressed_value = upload_data_dict[key]
+        #         compressed_value = SQL_Connection.compress_string(uncompressed_value)
+        #         upload_data_dict[key] = compressed_value
+        #     except KeyError:
+        #         raise ValueError(
+        #             f'unable to find {key} in {type(the_object).__name__} database dict. Modify the fields_to_compress instance variable'
+        #             f'or the database_dict method so key names align')
         dict_values_tuple = tuple(upload_data_dict.values())
         if just_values:
             return f'\n{dict_values_tuple}'
@@ -398,24 +397,24 @@ class SQL_Connection(object):
         upload_data_dict = the_object.database_dict()
         return str(tuple(upload_data_dict.keys())).replace("'", "")
 
-    @staticmethod
-    def compress_string(string):
-        """
-        compresses a given string into bytes
-        :param string: the string to be compressed
-        :return: a compressed byte string of the original
-        """
-        string = str(string)
-        return zlib.compress(string.encode('utf-8'))
-
-    @staticmethod
-    def decompress_string(cmpstr):
-        """
-        decompresses a byte string
-        :param cmpstr: the byte string to be decompressed
-        :return: the decompressed string
-        """
-        return zlib.decompress(cmpstr).decode('utf-8')
+    # @staticmethod
+    # def compress_string(string):
+    #     """
+    #     compresses a given string into bytes
+    #     :param string: the string to be compressed
+    #     :return: a compressed byte string of the original
+    #     """
+    #     string = str(string)
+    #     return zlib.compress(string.encode('utf-8'))
+    #
+    # @staticmethod
+    # def decompress_string(cmpstr):
+    #     """
+    #     decompresses a byte string
+    #     :param cmpstr: the byte string to be decompressed
+    #     :return: the decompressed string
+    #     """
+    #     return zlib.decompress(cmpstr).decode('utf-8')
 
 class UnmutableKey(ScraperException):
 
