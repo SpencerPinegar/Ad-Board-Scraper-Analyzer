@@ -7,6 +7,7 @@ from time import sleep
 import re
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
 
 """
 This page contains static generic functions to run a selenium webdriver
@@ -54,9 +55,9 @@ def drop_down_select_and_wait(backup_xpath, driver, element_identifier, label, n
             message = f"Waited to long {n_element_name}"
             the_wait = WebDriverWait(driver, 10)
             the_wait.until(element_enabled_by_name(n_element_name), message)
-        except:
+        except Exception as e:
             driver.quit()
-            raise FrozenSelectorException(n_element_name, driver.current_url)
+            raise FrozenSelectorException(e, n_element_name, driver.current_url)
 
 
 def fuzzy_drop_down_select(driver, model_string, element_identifier):
@@ -70,6 +71,8 @@ def fuzzy_drop_down_select(driver, model_string, element_identifier):
     :return: The label of the Select Button to be chosen
     """
     options = get_all_options(driver=driver, element_identifier=element_identifier)
+    if len(options) == 1:
+        raise FrozenSelectorException("The ModelID options is broken", str(element_identifier), str(driver.current_url))
     label, accuracy = process.extractOne(query=model_string, choices=options, scorer=fuzz.token_set_ratio)
     if accuracy < 50:
         print(f'Very Inaccurate Results trying to find match for {model_string}')
@@ -86,10 +89,12 @@ def get_all_options(driver, element_identifier, by=By.NAME):
                 a selenium by object
     :return: the list of all possible options text
     """
+    tries = 0
     options_element = Select(driver.find_element(by, element_identifier))
     options = options_element.options
-    while len(options) == 1:
+    while len(options) == 1 and tries < 3:
         sleep(1)
+        tries = tries + 1
         options = options_element.options
     for index in range(len(options)):
         options[index] = options[index].text
@@ -117,9 +122,9 @@ def next_page(driver, xpath, next_element_xpath=None, the_long_wait = True):
                  the_next_page_item = the_wait.until(element_exists_by_xpath(next_element_xpath),
                                                         "The Next Page took too long to load")
             return
-        except:
+        except Exception as e:
             print(driver.current_url)
-            raise UnexpectedPageLoaded(next_element_xpath, driver.current_url)
+            raise UnexpectedPageLoaded(e, next_element_xpath, driver.current_url)
 
 
 def enter_text(driver, locator, text):
@@ -205,11 +210,11 @@ class element_exists_by_xpath(object):
             return False
 
 
-class FrozenSelectorException(Exception):
+class FrozenSelectorException(ScraperException):
     """
     This Exception is raised when Selectors freeze or are unaccesible when they need to be
     """
-    def __init__(self, name, url):
+    def __init__(self, error, name, url):
         """
         Creates the Exception
         :param name: The name attribute of the selector element that is having an issue
@@ -217,14 +222,14 @@ class FrozenSelectorException(Exception):
         """
         message = f'The Page with URL: {url}' \
                   f'had a broken selector with a identifier of {name}'
-        super(FrozenSelectorException, self).__init__(message)
+        super().__init__(error, message, FrozenSelectorException)
 
 
-class UnexpectedPageLoaded(Exception):
+class UnexpectedPageLoaded(ScraperException):
     """
     This Exception is returned when the page that was loaded was not expected
     """
-    def __init__(self, xpath, url):
+    def __init__(self,e,  xpath, url):
         """
         Creates the Exception
         :param xpath: The xpath of the expected element that could not be found
@@ -233,4 +238,4 @@ class UnexpectedPageLoaded(Exception):
 
         message = f'The Page with URL: {url}' \
                   f'did not load the expected xpath: {xpath}'
-        super(UnexpectedPageLoaded, self).__init__(message)
+        super().__init__(e, message, UnexpectedPageLoaded)

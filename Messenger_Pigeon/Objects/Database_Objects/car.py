@@ -109,10 +109,10 @@ class Car(DataBase_Object):
 
         try:
             self.id = str(item_id)
-            self.ad_identifier = normalize(identifier)
+            self.ad_identifier = int(normalize(identifier))
             self.title = normalize(title)
-            self.mileage = normalize(mileage)
-            self.year = normalize(year)
+            self.mileage = int(normalize(mileage))
+            self.year = int(normalize(year))
             self.normalize_make(make)
             self.model = normalize(model)
             self.trim = normalize(trim)
@@ -269,7 +269,7 @@ class Car(DataBase_Object):
             self.make_label = ''
             return
         try:
-            driver = GW.Requester.create_chrome_driver()
+            driver = GW.Requester.create_chrome_driver(headless=False)
             driver.get('http://www.autobytel.com/kelley-blue-book/')
             driver.maximize_window()
             GS.drop_down_select_and_wait(driver=driver,
@@ -353,7 +353,7 @@ class Car(DataBase_Object):
         if self.year > 1995 and self.vin != '':
             driver = None
             try:
-                driver = GW.Requester.create_chrome_driver()
+                driver = GW.Requester.create_chrome_driver(headless=False)
                 driver.get('http://www.carfax.com/value/')
                 driver.maximize_window()
                 GS.enter_text(driver=driver,
@@ -361,8 +361,8 @@ class Car(DataBase_Object):
                               text='84101'
                               )
                 GS.enter_text(driver=driver,
-                              locator=('class name', 'vin-form__input'),
-                              text=self.vin
+                              locator=('xpath', '//div[@id="vin-input"]/div/input'),
+                              text=str(self.vin)
                               )
             except Exception as e:
                 driver.quit()

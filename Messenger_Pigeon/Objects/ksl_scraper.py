@@ -206,7 +206,7 @@ class KSL_SCRAPER(object):
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
                 self.data_base.add_object(ad_car)
                 self.data_base.add_object(the_listing)
-                self.data_base.add_object(seller)
+                self.data_base.add_object(the_seller)
                 self.data_base.remove_object(unproc_listing)
                 print("success")
 
