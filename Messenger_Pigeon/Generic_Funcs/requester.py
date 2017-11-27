@@ -196,8 +196,16 @@ class Requester(object):
             options.add_argument('headless')
         if ip != None:
             options.add_argument(f'--proxy-server={ip}')
-        browser = webdriver.Chrome(Requester.chrome_path, chrome_options=options)
+        browser = webdriver.Chrome(Requester.getChromePath(), chrome_options=options)
         return browser
+
+
+    @staticmethod
+    def getChromePath():
+        import os
+        script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+        rel_path = Requester.chrome_path
+        return os.path.join(script_dir, rel_path)
 
 
 class InvalidBaseURLException(Exception):
