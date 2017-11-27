@@ -17,7 +17,7 @@ This class contains static generic functions that are used when scraping webpage
 class Requester(object):
     proxy_urls: list = []
     proxy_ip: bool = True
-    chrome_path = r'/Users/admin/PycharmProjects/Projects/Messenger_Pigeon/Messenger_Pigeon/Driver_Binaries/chromedriver'
+    chrome_path = r'../Driver_Binaries/chromedriver'
 
 
 
@@ -52,6 +52,8 @@ class Requester(object):
         :return: A beautifulsoup object of the given url and params created with specified parser - BeautifulSoup                                
             will return None if the object cannot be created                                                                                     
         """
+        proxy_dict = {}
+        proxy = {}
         if self.proxy_ip:
             proxy = self.get_proxy()
             if proxy[4] == ':':
