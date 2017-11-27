@@ -21,7 +21,6 @@ setup(name='Messenger_Pigeon',
       author_email='SpencerJPinegar@gmail.com',
       packages=['Messenger_Pigeon'],
       install_requires=[
-            're',
             'selenium',
             'fuzzywuzzy',
             'requests',
@@ -30,7 +29,8 @@ setup(name='Messenger_Pigeon',
             'twilio',
             'pymysql',
             'textblob',
-            'proxybroker', 'nose',
+            'proxybroker',
+            'nose',
       ],
       zip_safe=False
       )

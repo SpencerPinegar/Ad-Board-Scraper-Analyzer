@@ -63,6 +63,6 @@ def process_years(years):
 # def main():
 #     pull_bad_models()
 
-
-if __name__ == '__main__':
-    main()
+#
+# if __name__ == '__main__':
+#     main()
