@@ -25,16 +25,16 @@ Proxy_IP::'False'
 
 
  - The DB_Host setting is the host of the mySQL server you set up earlier.
-DB_Host::'ssh.pythonanywhere.com'
+DB_Host::'kslwebscraper.ciyxnmsmduca.us-west-1.rds.amazonaws.com:3306'
 
  - The DB_User setting is the username of the mySQL server you set up earlier.
 DB_User::'dedc'
 
  - The DB_Password setting is the password of the mySQL server you set up earlier.
-DB_Password::'ScrapeCarsGetCash'
+DB_Password::'369Pinegar'
 
  - The DB_Name setting is the name of the mySQL database you set up in the mySQL server earlier.
-DB_Name::'dedc$KSL_WebScraper'
+DB_Name::'KSL_WebScraper'
 
 
 
