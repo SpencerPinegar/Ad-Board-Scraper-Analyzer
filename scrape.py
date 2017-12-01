@@ -42,6 +42,7 @@ def main():
             except Exception as e:
                 the_scraper.notifier.send_message(the_scraper.to_number, "THE SCRAPER IS SHUTTING DOWN!!!! "
                                                                          f"Cause:: {str(e)}")
+                exit(-1)
 
 
 def get_settings():
