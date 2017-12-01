@@ -105,7 +105,7 @@ def next_page(driver, el_locator, next_el_locator=None, the_long_wait = True):
     """
     This class clicks the next page button and waits for the expected page to load
     :param driver: the driver used in the test - driver
-    :param xpath: The xpath of the button that brings us to the next page
+    :param el_locator: The locator of the button that brings us to the next page
     :param next_el_locator: The xpath of the expected element on the next page
     :raises: UnexpectedPageLoaded if the element to be found on the next page is not found
     """
@@ -113,7 +113,7 @@ def next_page(driver, el_locator, next_el_locator=None, the_long_wait = True):
     next_button = the_wait.until(EC.presence_of_element_located(el_locator), "We could not find the button")
     driver.execute_script("arguments[0].click();", next_button)
     the_long_wait = WebDriverWait(driver, 10)
-    if next_el_locator != None:
+    if next_el_locator is not None:
         try:
             if the_long_wait:
                 the_next_page_item = the_long_wait.until(EC.presence_of_element_located(next_el_locator),
