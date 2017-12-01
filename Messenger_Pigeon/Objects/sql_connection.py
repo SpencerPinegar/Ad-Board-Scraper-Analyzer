@@ -3,8 +3,6 @@ import pymysql
 from Messenger_Pigeon.Objects.Database_Objects.database_object import DataBase_Object
 from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
 
-sshtunnel.SSH_TIMEOUT = 5.0
-sshtunnel.TUNNEL_TIMEOUT = 5.0
 
 ##BUILDING NEW WEBSERER TO HOLD DATA
 #           #Username:
