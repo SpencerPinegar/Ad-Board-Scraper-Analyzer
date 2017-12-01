@@ -2,7 +2,6 @@
 import pymysql
 from Messenger_Pigeon.Objects.Database_Objects.database_object import DataBase_Object
 from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
-import sshtunnel
 
 sshtunnel.SSH_TIMEOUT = 5.0
 sshtunnel.TUNNEL_TIMEOUT = 5.0
@@ -45,19 +44,12 @@ class SQL_Connection(object):
         """
 
 
-        with sshtunnel.SSHTunnelForwarder(
-                ('ssh.pythonanywhere.com'),
-                ssh_username='dedc',
-                ssh_password='369Pinegar',
-                remote_bind_address=(
-                'dedc.mysql.pythonanywhere-services.com', 3306)
-        ) as tunnel:
-            self.connection = pymysql.connect(host=self.host,
+
+        self.connection = pymysql.connect(host=self.host,
                                               user=self.user,
                                               password=self.password,
                                               db=self.db_name,
-                                              cursorclass=self.cursor_type,
-                                              port=tunnel.local_bind_port)
+                                              cursorclass=self.cursor_type)
 
 
 
