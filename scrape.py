@@ -29,8 +29,9 @@ def main():
         except Exception as e:
             print(str(e))
             new_error = ScraperException(e, 'Main level exception', ScraperException)
-            the_scraper.data_base.add_object(new_error)
-            the_scraper = KSL_SCRAPER(_range=_range,
+            try:
+                the_scraper.data_base.add_object(new_error)
+                the_scraper = KSL_SCRAPER(_range=_range,
                                       number_to_notify=number_to_notify,
                                       proxy_ip=proxy_ip,
                                       db_host=db_host,
@@ -38,6 +39,9 @@ def main():
                                       db_password=db_password,
                                       db_name=db_name
                                       )
+            except Exception as e:
+                the_scraper.notifier.send_message(the_scraper.to_number, "THE SCRAPER IS SHUTTING DOWN!!!! "
+                                                                         f"Cause:: {e.message}")
 
 
 def get_settings():

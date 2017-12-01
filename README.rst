@@ -88,11 +88,62 @@ Getting Started
         ad_identifier       int         10          No          Yes             Yes         Unsigned
         attempts            tinyint     1           No          No              No          Unsigned
 
+
+    Table 5 - Unprocessed_Listings:
+
+             The following table contains all listings that have been seen but not processed.
+
+        Column Name:        Type:       Length:     Null:       Primary:        Unique:     Misc:
+    -------------------------------------------------------------------------------------------------
+        Hash                varchar     32          No          Yes             Yes         -
+        causing_error       varchar     1000        No          No              No          -
+        why_thrown          varchar     1000        No          No              No          -
+        AddedOnDate         timestamp   -           Yes         No              No          Defalt = CURRENT_TIMESTAMP
+        seen                int         10          No          No              No          Default = 1
+
 2. Set up Twilio:
     To be notified of the good deals you must have a twilio keys. This can easily be done, go to twilio's website
     and applying for a twilio api key and password. You will use this to receive mobile notifications of bad deals.
     When you have recieved your account information go to the phone object and replace the neccesary fields. Now
     you just need to enter the number you want notified of good deals in the ksl_scraper object as a parameter.
+
+
+3. Create a Settings file
+    The settings file is a text file created located in the same folder as the scrape function. The name must be in
+    all caps. Copy the example Settings file and put all relevant information between the single quotes.
+
+  Ex:
+
+  ------   SETTINGS   ------
+--------------------------------
+
+ - Scraper Settings -
+
+Range::'50'
+Number_To_Notify::'8016692828'
+Max_Pages::'2'
+Proxy_IP::'False'
+
+
+ - Connection Settings -
+
+DB_Host::'localhost'
+DB_User::'root'
+DB_Password::''
+DB_Name::'KSL_WebScraper'
+
+
+ -- Settigs Info --
+
+ - The Range setting determines how close a listing needs to be within your range to be pulled, stored, and read.
+ - The Number_To_Notify setting is the number of the phone you would like to recieve all good deals to
+ - The Max_Pages settingis the number of previously listed pages you would like to sort through before only processing new listings
+ - The Proxy_IP setting determines if you want your ip to be proxied or not - this is useful to avoid getting blacklisted.
+            The only issue is when this setting is on errors occur more frequently ad it is a newer feature.
+ - The DB_Host setting is the host of the mySQL server you set up earlier.
+ - The DB_User setting is the username of the mySQL server you set up earlier.
+ - The DB_Password setting is the password of the mySQL server you set up earlier.
+ - The DB_Name setting is the name of the mySQL database you set up in the mySQL server earlier.
 
 Usage:
 
@@ -101,57 +152,11 @@ Usage:
     These are not uncommon but should occur at a rate of less than 1-10. Other issues such as the scraper being unable
     to build a certain listings car will be displayed as well.
 
-    This is the method that will start the scraper.
+    The Scraper can be started by running the scrape.py file from the command line.
 
-
-        def main(_range,
-         number_to_notify,
-         max_pages,
-         proxy_ip = True,
-         db_host='localhost',
-         db_user='root',
-         db_password='',
-         db_name='KSL_WebScraper'):
-         the_scraper = KSL_SCRAPER(_range=_range,
-                              number_to_notify=number_to_notify,
-                              proxy_ip=proxy_ip,
-                              db_host=db_host,
-                              db_user=db_user,
-                              db_password=db_password,
-                              db_name=db_name
-                              )
-
-            while True:
-                try:
-                    the_scraper.data_base.open_connection()
-                    the_scraper.load_new_listings(max_pages = max_pages)
-                    the_scraper.process_unproccessed_listings()
-                    the_scraper.data_base.close_connection()
-                    print('one cycle complete')
-                    time.sleep(60)
-                except:
-                    print("SHIT")
-                    the_scraper = KSL_SCRAPER(_range=_range,
-                                      number_to_notify=number_to_notify,
-                                      proxy_ip=proxy_ip,
-                                      db_host=db_host,
-                                      db_user=db_user,
-                                      db_password=db_password,
-                                      db_name=db_name
-                                      )
-
-
-        The _range parameter determines how close a listing needs to be within your range to be pulled, stored, and read.
-        The number_to_notify is the number of the phone you would like to recieve all good deals to
-        The max_pages is the number of previously listed pages you would like to sort through before only processing
-            new listings
-        The proxy_ip parameter determines if you want your ip to be proxied or not - this is useful to avoid getting blacklisted.
-            The only issue is when this setting is on errors occur more frequently ad it is a newer feature.
-        The db_host parameter is the host of the mySQL server you set up earlier.
-        The db_user parameter is the username of the mySQL server you set up earlier.
-        The db_password parameter is the password of the mySQL server you set up earlier.
-        The db_name is the name of the mySQL database you set up in the mySQL server earlier.
-
-
+    1. Make sure the relevant mySQL server is activated.
+    2. Go to /Messenger_Pigeon --- not /Messenger_Pigeon/Messenger_Pigeon
+    3. type python3 scrape.py
+    4.
 
 
