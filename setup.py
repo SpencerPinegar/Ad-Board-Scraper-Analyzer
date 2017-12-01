@@ -29,7 +29,7 @@ setup(name='Messenger_Pigeon',
             'twilio',
             'pymysql',
             'textblob',
-            'proxybroker',
+            #'proxybroker',
             'nose',
       ],
       zip_safe=False

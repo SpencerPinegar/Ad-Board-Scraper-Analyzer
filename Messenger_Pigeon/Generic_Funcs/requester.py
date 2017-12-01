@@ -6,7 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import asyncio
-from proxybroker import Broker
+#from proxybroker import Broker
 import random
 
 """
@@ -130,11 +130,11 @@ class Requester(object):
         """
         self.proxy_urls = []
         proxies = asyncio.Queue()
-        broker = Broker(proxies)
-        tasks = asyncio.gather(broker.find(types=['HTTP', 'HTTPS'], limit=10),
-                               self.save(proxies))
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(tasks)
+        #broker = Broker(proxies)
+        #tasks = asyncio.gather(broker.find(types=['HTTP', 'HTTPS'], limit=10),
+        #                       self.save(proxies))
+        #loop = asyncio.get_event_loop()
+        #loop.run_until_complete(tasks)
 
     @staticmethod
     def grab_attribute(_attribute,
