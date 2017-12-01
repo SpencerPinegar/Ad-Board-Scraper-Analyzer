@@ -55,15 +55,19 @@ class KSL_SCRAPER(object):
         :param db_password: The password for accessing the db
         :param db_name: The name of the db you are accessing
         """
-        self.range = _range
+        if str(proxy_ip).lower() == 'true':
+            proxy_ip = True
+        else:
+            proxy_ip = False
+        self.requester = requester.Requester(proxy_ip)
+        self.range = int(_range)
         self.data_base = sql_connection.SQL_Connection(host=db_host,
                                                        user=db_user,
                                                        password=db_password,
                                                        db_name=db_name
                                                        )
-        self.to_number = phone.Phone.normalize_number(number_to_notify)
+        self.to_number = phone.Phone.normalize_number(int(number_to_notify))
         self.notifier = phone.Phone()
-        self.requester = requester.Requester(proxy_ip=proxy_ip)
 
     def load_new_listings(self,
                           max_pages=10,

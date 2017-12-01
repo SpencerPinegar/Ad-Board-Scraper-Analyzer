@@ -4,10 +4,10 @@
 
  - Scraper Settings -
 
-Range::50
-Number_To_Notify::
-Max_Pages::5
-Proxy_IP::False
+Range::'50'
+Number_To_Notify::'8016692828'
+Max_Pages::'2'
+Proxy_IP::'False'
 
 
  - Connection Settings -
