@@ -1,0 +1,20 @@
+
+  ------   SETTINGS   ------
+--------------------------------
+
+ - Scraper Settings -
+
+Range::50
+Number_To_Notify::
+Max_Pages::5
+Proxy_IP::False
+
+
+ - Connection Settings -
+
+DB_Host::'localhost'
+DB_User::'root'
+DB_Password::''
+DB_Name::'KSL_WebScraper'
+
+
