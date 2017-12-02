@@ -25,7 +25,7 @@ Proxy_IP::'False'
 
 
  - The DB_Host setting is the host of the mySQL server you set up earlier.
-DB_Host::'kslwebscraper.ciyxnmsmduca.us-west-1.rds.amazonaws.com:3306'
+DB_Host::'kslwebscraper.ciyxnmsmduca.us-west-1.rds.amazonaws.com'
 
  - The DB_User setting is the username of the mySQL server you set up earlier.
 DB_User::'dedc'
