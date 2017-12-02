@@ -52,7 +52,7 @@ def get_settings():
     """
     settings = {}
     try:
-        with open('SETTINGS') as settings_file:
+        with open(r'Messenger_Pigeon/SETTINGS') as settings_file:
             for line in settings_file.readlines():
                 if line.__contains__('::'):
                     key_value = line.split('::')

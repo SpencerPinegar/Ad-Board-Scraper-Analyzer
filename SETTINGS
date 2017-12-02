@@ -11,7 +11,7 @@ Range::'50'
 - The Number_To_Notify setting is the number of the phone you would like to recieve all good deals to
 Number_To_Notify::'8016692828'
 
- - The Max_Pages settingis the number of previously listed pages you would like to sort through before only processing
+ - The Max_Pages settings the number of previously listed pages you would like to sort through before only processing
         new listings
 Max_Pages::'2'
 
