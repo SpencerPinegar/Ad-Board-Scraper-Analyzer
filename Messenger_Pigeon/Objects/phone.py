@@ -27,10 +27,12 @@ class Phone():
         :param to_number: the number the message is sent to
         :param body: the body of the message
         """
+        if len(body) > 1550:
+            body=body[0:1550]
         self.client.messages.create(
             to=Phone.normalize_number(to_number),
             from_=Phone.account_phone_number,
-            body=body[0:1550]
+            body=body
         )
 
 
