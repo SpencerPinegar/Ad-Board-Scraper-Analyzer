@@ -34,7 +34,7 @@ DB_User::'dedc'
 DB_Password::'369Pinegar'
 
  - The DB_Name setting is the name of the mySQL database you set up in the mySQL server earlier.
-DB_Name::'KSL_WebScraper'
+DB_Name::'dedc$KSL_WebScraper'
 
 
 
