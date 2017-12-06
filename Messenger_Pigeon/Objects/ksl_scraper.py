@@ -206,7 +206,7 @@ class KSL_SCRAPER(object):
                 self.data_base.increment_object(unproc_listing)
                 self.load_ad_page(unproc_listing.ad_identifier)
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
-                if not self.is_good_deal(ad_car):
+                if self.is_good_deal(ad_car):
                     print("Should send Car Deal")
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
                     print(f"Sent deal of car with id of {the_listing.id}")

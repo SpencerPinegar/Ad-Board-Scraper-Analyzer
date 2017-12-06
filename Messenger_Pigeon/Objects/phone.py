@@ -29,7 +29,7 @@ class Phone():
         """
         if len(body) > 1550:
             body=body[0:1550]
-        for number in to_number:
+        for number in Phone.format_number_array(to_number):
             self.client.messages.create(
                 to=Phone.normalize_number(number),
                 from_=Phone.account_phone_number,
@@ -44,7 +44,7 @@ class Phone():
         :param number: the number to be normalized as a string
         :return: a normalized number that the client can interact with
         """
-        number = str(number).strip()
+        number = str(number).replace(' ', '').replace('(', '').replace(')', '').replace('+', '')
         if len(number) == 10:
             number = '+1' + number
         if len(number) == 11:
@@ -52,3 +52,17 @@ class Phone():
         if len(number) != 12 or number[0] != '+' or number[1] != '1':
             raise ValueError("You entered an invalid number for the phone object")
         return number
+
+    @staticmethod
+    def format_number_array(number_array_string: str):
+        """
+        Formats a string representation of numbers to an array of numbers
+        :param number_array_string: The array of numbers expressed as a string
+        :return: The numbers from string as sn array of numbers in strings
+        """
+        number_array_string = number_array_string.split(',')
+        number_array = []
+        for number in number_array_string:
+            number = number.strip().strip("'")
+            number_array.append(number)
+        return number_array

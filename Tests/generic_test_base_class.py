@@ -22,7 +22,7 @@ class Generic_Test_Class(unittest.TestCase):
                                                 db_name=db_name
                                                 )
 
-        self.connection_object.open_connection()
+
 
 
     def unique_id(self):
