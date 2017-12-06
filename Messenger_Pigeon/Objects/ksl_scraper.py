@@ -207,7 +207,9 @@ class KSL_SCRAPER(object):
                 self.load_ad_page(unproc_listing.ad_identifier)
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
                 if self.is_good_deal(ad_car):
+                    print("Should send Car Deal")
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
+                    print(f"Sent deal of car with id of {the_listing.id}")
                 self.data_base.add_object(ad_car)
                 self.data_base.add_object(the_listing)
                 self.data_base.add_object(the_seller)
@@ -399,9 +401,19 @@ class KSL_SCRAPER(object):
             bad_model = 'true'
         return_string = f"""   INFO
         
-    ___  CAR ANALYSIS  ___
+    ___  CAR INFO  ___
+    Make: {the_car.make.name},
+    Model: {the_car.model},
     Price: {the_car.price},
     Value: {the_car.value[0]},
+    Mileage: {the_car.mileage},
+    Title Type: {the_car.title_type.name},
+    Year: {the_car.year},
+    Trim: {the_car.trim},
+    Condition: {the_car._calculate_condition()},
+    Color: {the_car.exterior_color.name}
+        
+    ___  CAR ANALYSIS  ___
     Value Accuracy: {the_car.value[1]},
     Price Dif: {the_car.value[0] - the_car.price},
     ROI: {(the_car.value[0] - the_car.price)/the_car.price},
@@ -410,16 +422,6 @@ class KSL_SCRAPER(object):
     Longevity: {the_car.longevity} - avg 11,
     Make Rating: {the_car.make_reliability} - avg 50
          
-    ___  CAR INFO  ___
-    Title Type: {the_car.title_type.name},
-    Year: {the_car.year},
-    Mileage: {the_car.mileage},
-    Make: {the_car.make.name},
-    Model: {the_car.model},
-    Trim: {the_car.trim},
-    Condition: {the_car._calculate_condition()},
-    Color: {the_car.exterior_color.name}
-        
     ____  SELLER INFO ____
     Name: {the_seller.name},
     Number: {the_seller.phone_number},

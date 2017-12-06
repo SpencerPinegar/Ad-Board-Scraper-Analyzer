@@ -6,9 +6,9 @@ class Phone():
     and so incoming messages can be handled
     """
 
-    account_sid = 'ACfb681dc0a65548772d52129913598a70' # The twilio accound_sid
-    auth_token = '49014e519a5fda8cb062ad74510220cc' # the twilio auth_token
-    account_phone_number = '+13853233117' # the phone number associated with the account
+    account_sid = 'AC4e7c63bc0753b5eabfbdaa7ec099172a' # The twilio accound_sid
+    auth_token = 'e33523ef24889a9f4ac9c7fbd29e19bc' # the twilio auth_token
+    account_phone_number = '+1385236-0131' # the phone number associated with the account
     client = None # the messaging client
 
 
@@ -24,16 +24,17 @@ class Phone():
     def send_message(self, to_number, body):
         """
         
-        :param to_number: the number the message is sent to
+        :param to_number: the numbers the message is sent to in an array
         :param body: the body of the message
         """
         if len(body) > 1550:
             body=body[0:1550]
-        self.client.messages.create(
-            to=Phone.normalize_number(to_number),
-            from_=Phone.account_phone_number,
-            body=body
-        )
+        for number in to_number:
+            self.client.messages.create(
+                to=Phone.normalize_number(number),
+                from_=Phone.account_phone_number,
+                body=body
+            )
 
 
     @staticmethod
