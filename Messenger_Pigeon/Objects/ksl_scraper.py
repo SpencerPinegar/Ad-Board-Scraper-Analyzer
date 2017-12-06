@@ -219,8 +219,10 @@ class KSL_SCRAPER(object):
             except DeletedAdPageURLException:
                 self.data_base.remove_object(unproc_listing)
             except ScraperException as e:
+                print('scraperException')
                 self.data_base.add_object(e)
             except Exception as e:
+                print('unknown Exception')
                 message = 'Unknown Error While Proccessing Listings'
                 raise ScraperException(e, message, ScraperException)
 
