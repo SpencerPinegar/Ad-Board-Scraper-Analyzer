@@ -1,5 +1,8 @@
+from unittest import TestCase
 from Tests.generic_test_base_class import Generic_Test_Class
 import unittest
+import uuid
+import nose
 import Messenger_Pigeon.Objects.Database_Objects.car as car
 
 

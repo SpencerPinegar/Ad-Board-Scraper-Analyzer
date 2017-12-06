@@ -12,13 +12,6 @@ from Messenger_Pigeon.Objects.sql_connection import SQL_Connection
 class SQL_Connection_Tester(Generic_Test_Class):
     def setUp(self):
         super().setUp()
-        self.connection_object = SQL_Connection(host='localhost',
-                                                user='root',
-                                                password='',
-                                                db_name='KSL_WebScraper'
-                                                )
-
-        self.connection_object.open_connection()
 
     #####
     #####       The following tests are for endge cases invoving the sql_connection_object

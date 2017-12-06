@@ -49,7 +49,7 @@ class KSL_SCRAPER(object):
         """
         Creates a webscraper object that will notify you about good deals on cars based on their price and value
         :param _range: The range of miles you want to see listings in
-        :param number_to_notify: The number that will be texted about good deals that pop-up entered as string
+        :param number_to_notify: The numbers that will be texted about good deals that pop-up entered as an array of strings
         :param db_host: The address of the location hosting the db
         :param db_user: The user accessing the db
         :param db_password: The password for accessing the db
@@ -66,7 +66,7 @@ class KSL_SCRAPER(object):
                                                        password=db_password,
                                                        db_name=db_name
                                                        )
-        self.to_number = phone.Phone.normalize_number(int(number_to_notify))
+        self.to_number = number_to_notify
         self.notifier = phone.Phone()
 
     def load_new_listings(self,
@@ -206,7 +206,7 @@ class KSL_SCRAPER(object):
                 self.data_base.increment_object(unproc_listing)
                 self.load_ad_page(unproc_listing.ad_identifier)
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
-                if self.is_good_deal(ad_car):
+                if not self.is_good_deal(ad_car):
                     print("Should send Car Deal")
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
                     print(f"Sent deal of car with id of {the_listing.id}")

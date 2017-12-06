@@ -8,8 +8,9 @@
 - The Range setting determines how close a listing needs to be within your range to be pulled, stored, and read.
 Range::'50'
 
-- The Number_To_Notify setting is the number of the phone you would like to recieve all good deals to
-Number_To_Notify::'8016692828'
+- The Number_To_Notify setting is the number of the phone you would like to recieve all good deals to - seperate with
+    commas
+Number_To_Notify::'8016692828, 8015921989'
 
  - The Max_Pages settings the number of previously listed pages you would like to sort through before only processing
         new listings

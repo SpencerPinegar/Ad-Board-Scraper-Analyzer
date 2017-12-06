@@ -15,18 +15,28 @@ It builds cars using scrape attributes, and predicts their value
 """
 
 
-def normalize(item):
+def normalize(item, to_number=False, make_int=True, essential_field_name=None):
     """
     If the value was not entered in it is set to an empty string
     :param item: the value to be normalized
     :return: the normalized item
     """
-    if item == None:
+    if str(item).lower() == 'not specified' or item == None or item == '':
+        if essential_field_name is not None:
+            raise MissingEssentialDataException(essential_field_name)
         item = ''
-    if str(item).lower() == 'not specified':
-        return ''
     else:
-        return str(item)
+        item = str(item)
+    if to_number:
+        if item == '':
+            return 0
+        else:
+            if make_int:
+                return int(round(float(item)))
+            else:
+                return float(item)
+    else:
+        return item
 
 
 class Car(DataBase_Object):
@@ -108,11 +118,11 @@ class Car(DataBase_Object):
         """
 
         try:
-            self.id = str(item_id)
-            self.ad_identifier = int(normalize(identifier))
+            self.id = normalize(item=item_id, essential_field_name='car id')
+            self.ad_identifier = normalize(identifier, True, essential_field_name='car ad_identifier')
             self.title = normalize(title)
-            self.mileage = int(normalize(mileage))
-            self.year = int(normalize(year))
+            self.mileage = normalize(mileage, True, essential_field_name='car mileage')
+            self.year = normalize(year, True, essential_field_name='car year')
             self.normalize_make(make)
             self.model = normalize(model)
             self.trim = normalize(trim)
@@ -122,18 +132,20 @@ class Car(DataBase_Object):
             self.exterior_color = self.normalize_color(exterior_color)
             self.interior_color = self.normalize_color(interior_color)
             self.normalize_transmission(transmission)
-            self.liters = normalize(liters)
+            self.liters = normalize(liters, True, False)
             self.normalize_fuel(fuel_type)
             self.exterior_condition = self.normalize_condition(exterior_condition)
             self.interior_condition = self.normalize_condition(interior_condition)
             self.normalize_drive_type(drive_type)
-            self.cylinders = normalize(cylinders)
-            self.door_amount = normalize(door_amount)
-            self.price = price
+            self.cylinders = normalize(cylinders, True)
+            self.door_amount = normalize(door_amount, True)
+            self.price = normalize(price, True, True, 'car price')
             self._popularity_score()
             self._car_longevity()
             self._get_brand_reliability_rating()
             self._is_bad_model_year()
+        except MissingEssentialDataException as e:
+            raise e
         except Exception as e:
             raise BuildCarException(e, self.id)
         if get_value:
@@ -147,7 +159,6 @@ class Car(DataBase_Object):
                     return
         else:
             return
-
 
     def _set_value(self, value: int, accuracy: int):
         """
@@ -371,7 +382,8 @@ class Car(DataBase_Object):
                 try:
                     GS.next_page(driver=driver,
                                  el_locator=('xpath', '//input[@id="btnGetCarfax"]'),
-                                 next_el_locator=('css selector', 'div.vehicle-info__trade > div:nth-child(2) > h2.vehicle-info__value'),
+                                 next_el_locator=(
+                                 'css selector', 'div.vehicle-info__trade > div:nth-child(2) > h2.vehicle-info__value'),
                                  the_long_wait=False
                                  )
 
@@ -523,11 +535,9 @@ class Car(DataBase_Object):
             if self.not_none(drive) and drive.upper() != 'NOT_SPECIFIED':
                 print(f"unable to determine Drive Type - {drive}")
 
-########################################################################################################################
-###                     The following function reprepresents the object as a dict for the database
-########################################################################################################################
-
-
+            ########################################################################################################################
+            ###                     The following function reprepresents the object as a dict for the database
+            ########################################################################################################################
 
     def unique_where(self):
         return f"ad_identifier={self.ad_identifier} AND price={self.price} AND mileage={self.mileage}"
@@ -606,7 +616,6 @@ class Car(DataBase_Object):
                    3,
                    False)
 
-
     @staticmethod
     def real_self(sql_connection):
         """
@@ -653,9 +662,6 @@ class Car(DataBase_Object):
         car._is_bad_model_year()
         car._get_brand_reliability_rating()
         return car
-
-
-
 
 
 from enum import Enum, unique
@@ -1003,6 +1009,20 @@ class Car_Data(object):
                                Make.FIAT: 17,
                                Make.RAM: 16
                                }
+
+
+class MissingEssentialDataException(ScraperException):
+    """
+    This exception is thrown when The scraper could not pull all the needed data
+    """
+
+    def __init__(self, fieldname):
+        """
+        Creates a CarFaxHistoryException
+        :param ad_identifier: The ad identifier associated with the car without carfax vehicle history
+        """
+        message = f'The essential fieldname {fieldname} was missing'
+        super().__init__('', message, MissingEssentialDataException)
 
 
 class CarFaxHistoryException(ScraperException):

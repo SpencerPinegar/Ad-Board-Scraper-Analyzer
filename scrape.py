@@ -2,12 +2,13 @@ from Messenger_Pigeon.Objects.ksl_scraper import KSL_SCRAPER
 from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
 
 required_keys = ['Range', 'Number_To_Notify', 'Max_Pages', 'Proxy_IP', 'DB_Host', 'DB_User', 'DB_Password', 'DB_Name']
+import os
 
 def main():
 
     settings = get_settings()
     _range = settings['Range']
-    number_to_notify = settings['Number_To_Notify']
+    number_to_notify = format_number_array(settings['Number_To_Notify'])
     proxy_ip = settings['Proxy_IP']
     db_host = settings['DB_Host']
     db_user = settings['DB_User']
@@ -51,8 +52,10 @@ def get_settings():
     :return:
     """
     settings = {}
+    dir = os.path.dirname(__file__)
+    filename = os.path.join(dir, 'SETTINGS')
     try:
-        with open(r'SETTINGS') as settings_file:
+        with open(filename) as settings_file:
             for line in settings_file.readlines():
                 if line.__contains__('::'):
                     key_value = line.split('::')
@@ -65,6 +68,21 @@ def get_settings():
         return settings
     except Exception as e:
         raise Exception("There was an issue reading the SETTINGS.txt file.")
+
+
+
+def format_number_array(number_array_string: str):
+    """
+    Formats a string representation of numbers to an array of numbers
+    :param number_array_string: The array of numbers expressed as a string
+    :return: The numbers from string as sn array of numbers in strings
+    """
+    number_array_string = number_array_string.split(',')
+    number_array = []
+    for number in number_array_string:
+        number = number.strip().strip("'")
+        number_array.append(number)
+    return number_array
 
 
 
