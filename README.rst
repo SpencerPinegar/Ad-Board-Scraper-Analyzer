@@ -145,6 +145,8 @@ DB_Name::'KSL_WebScraper'
  - The DB_Password setting is the password of the mySQL server you set up earlier.
  - The DB_Name setting is the name of the mySQL database you set up in the mySQL server earlier.
 
+-----------------------------------------------------------------------------------------------------------------------
+
 Usage:
 
     The KSL_Scraper is meant to be run 24/7 - so Error handling is a must. You will be able to see different types of
@@ -157,6 +159,5 @@ Usage:
     1. Make sure the relevant mySQL server is activated.
     2. Go to /Messenger_Pigeon --- not /Messenger_Pigeon/Messenger_Pigeon
     3. type python3 scrape.py
-    4.
 
 

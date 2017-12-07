@@ -16,6 +16,7 @@ def main():
     db_password = settings['DB_Password']
     db_name = settings['DB_Name']
     max_pages = int(settings['Max_Pages'])
+    directory = os.path.dirname(__file__)
 
     the_scraper = KSL_SCRAPER(_range=_range,
                               number_to_notify=number_to_notify,
@@ -23,7 +24,8 @@ def main():
                               db_host=db_host,
                               db_user=db_user,
                               db_password=db_password,
-                              db_name=db_name
+                              db_name=db_name,
+                              logs_file_path=directory
                               )
     while True:
         try:
@@ -39,7 +41,8 @@ def main():
                                       db_host=db_host,
                                       db_user=db_user,
                                       db_password=db_password,
-                                      db_name=db_name
+                                      db_name=db_name,
+                                      logs_file_path=directory
                                       )
             except Exception as e:
                 the_scraper.notifier.send_message(the_scraper.to_number, "THE SCRAPER IS SHUTTING DOWN!!!! "

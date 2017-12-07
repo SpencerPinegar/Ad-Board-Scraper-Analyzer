@@ -15,6 +15,7 @@ from Messenger_Pigeon.Objects import sql_connection
 from Messenger_Pigeon.Objects.Database_Objects import unproccessed_listing
 from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
 from Messenger_Pigeon.Objects import phone
+from Messenger_Pigeon.Objects import logger
 import time
 import json
 
@@ -36,6 +37,9 @@ class KSL_SCRAPER(object):
     current_bs_object = None  # holds the last web page data loaded
     to_number = ''  # the number to be notified
     notifier = None  # the object that will be notifying the to_number
+    logger = None
+
+
 
     def __init__(self,
                  _range,
@@ -44,7 +48,8 @@ class KSL_SCRAPER(object):
                  db_host='localhost',
                  db_user='root',
                  db_password='',
-                 db_name='KSL_WebScraper'
+                 db_name='KSL_WebScraper',
+                 logs_file_path = ''
                  ):
         """
         Creates a webscraper object that will notify you about good deals on cars based on their price and value
@@ -68,6 +73,7 @@ class KSL_SCRAPER(object):
                                                        )
         self.to_number = number_to_notify
         self.notifier = phone.Phone()
+        self.logger = logger.Logger(logs_file_path)
 
     def load_new_listings(self,
                           max_pages=10,
@@ -198,31 +204,33 @@ class KSL_SCRAPER(object):
                                                             where=f"attempts < {self.max_attempts}",
                                                             limit=1)
                 if len(unproc_items) == 0:
-                    print("Processed all listings")
+                    self.logger.log("Processed all listings")
                     return
                 unproc_dict = unproc_items[0]
                 unproc_listing = unproccessed_listing.Unprocessed_Listing(unproc_dict['ad_identifier'],
                                                                           unproc_dict['attempts'])
                 self.data_base.increment_object(unproc_listing)
                 self.load_ad_page(unproc_listing.ad_identifier)
+                self.logger.log("loading objects")
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
+                self.logger.log("objects loaded")
                 if self.is_good_deal(ad_car):
-                    print("Should send Car Deal")
+                    self.logger.log("Should send Car Deal")
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
-                    print(f"Sent deal of car with id of {the_listing.id}")
+                    self.logger.log(f"Sent deal of car with id of {the_listing.id}")
                 self.data_base.add_object(ad_car)
                 self.data_base.add_object(the_listing)
                 self.data_base.add_object(the_seller)
                 self.data_base.remove_object(unproc_listing)
-                print("success")
+                self.logger.log("success")
 
             except DeletedAdPageURLException:
                 self.data_base.remove_object(unproc_listing)
             except ScraperException as e:
-                print('scraperException')
+                self.logger.log('scraperException')
                 self.data_base.add_object(e)
             except Exception as e:
-                print('unknown Exception')
+                self.logger.log('unknown Exception')
                 message = 'Unknown Error While Proccessing Listings'
                 raise ScraperException(e, message, ScraperException)
 
