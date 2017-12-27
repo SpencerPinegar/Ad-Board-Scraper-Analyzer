@@ -214,7 +214,7 @@ class KSL_SCRAPER(object):
                 self.logger.log("loading objects")
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
                 self.logger.log("objects loaded")
-                if self.is_good_deal(ad_car):
+                if not self.is_good_deal(ad_car):
                     self.logger.log("Should send Car Deal")
                     self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
                     self.logger.log(f"Sent deal of car with id of {the_listing.id}")
