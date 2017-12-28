@@ -15,6 +15,7 @@ from Messenger_Pigeon.Objects import sql_connection
 from Messenger_Pigeon.Objects.Database_Objects import unproccessed_listing
 from Messenger_Pigeon.Objects.Database_Objects.database_error import ScraperException
 from Messenger_Pigeon.Objects import phone
+from Messenger_Pigeon.Objects import mailer
 from Messenger_Pigeon.Objects import logger
 import time
 import json
@@ -36,20 +37,23 @@ class KSL_SCRAPER(object):
     range = 100  # include listings with a range of how many miles
     current_bs_object = None  # holds the last web page data loaded
     to_number = ''  # the number to be notified
-    notifier = None  # the object that will be notifying the to_number
+    texter = None  # the object that will be notifying the to_number
     logger = None
-
-
 
     def __init__(self,
                  _range,
                  number_to_notify,
+                 email_to_send,
+                 email_password,
+                 email_service,
+                 email_to_recieve,
                  proxy_ip=True,
                  db_host='localhost',
                  db_user='root',
                  db_password='',
                  db_name='KSL_WebScraper',
-                 logs_file_path = ''
+                 logs_file_path='',
+                 email_only=True
                  ):
         """
         Creates a webscraper object that will notify you about good deals on cars based on their price and value
@@ -72,8 +76,14 @@ class KSL_SCRAPER(object):
                                                        db_name=db_name
                                                        )
         self.to_number = number_to_notify
-        self.notifier = phone.Phone()
+        self.texter = phone.Phone()
+        self.mailer = mailer.EmailConnection(email_service, email_to_send, email_password)
+        self.email_to_send = email_to_send
+        self.email_password = email_password
+        self.email_service = email_service
+        self.emails_to_recieve = email_to_recieve
         self.logger = logger.Logger(logs_file_path)
+        self.email_only = email_only
 
     def load_new_listings(self,
                           max_pages=10,
@@ -214,10 +224,20 @@ class KSL_SCRAPER(object):
                 self.logger.log("loading objects")
                 ad_car, the_seller, the_listing = self.initlize_objects_from_page()
                 self.logger.log("objects loaded")
-                if not self.is_good_deal(ad_car):
-                    self.logger.log("Should send Car Deal")
-                    self.notifier.send_message(self.to_number, self.write_up_ad_page(ad_car, the_seller, the_listing))
-                    self.logger.log(f"Sent deal of car with id of {the_listing.id}")
+                if self.is_good_deal(ad_car):
+                    self.logger.log("Found good deal")
+                    deal_info = self.write_up_ad_page(ad_car, the_seller, the_listing)
+                    subject = f"{ad_car.year} {ad_car.make} {ad_car.model} -- {ad_car.id}"
+                    if not self.email_only:
+                        self.logger.log("Should text Car Deal")
+                        self.texter.send_message(self.to_number, deal_info)
+                        self.logger.log(f"texted deal of car with id of {the_listing.id}")
+                    for reciever in self.emails_to_recieve:
+                        if reciever == 'NateCarDeals@gmail.com' and ad_car.make is not car.Make.SUBARU:
+                            continue
+                        email = mailer.Email(self.email_to_send, reciever, subject, deal_info)
+                        self.mailer.send(email)
+                    self.logger.log("Emailed Good Deal")
                 self.data_base.add_object(ad_car)
                 self.data_base.add_object(the_listing)
                 self.data_base.add_object(the_seller)
@@ -234,11 +254,10 @@ class KSL_SCRAPER(object):
                 message = 'Unknown Error While Proccessing Listings'
                 raise ScraperException(e, message, ScraperException)
 
-
     def work(self, max_pages):
         """
         The main function of the object, scrapes and reports on KSL Listings
-        :param max_pages: 
+        :param max_pages: The amount of pages that will be initially filtered through
         :return: 
         """
         try:
@@ -252,6 +271,10 @@ class KSL_SCRAPER(object):
         except ScraperException as e:
             the_scraper = KSL_SCRAPER(_range=self.range,
                                       number_to_notify=self.to_number,
+                                      email_to_send=self.email_to_send,
+                                      email_password=self.email_password,
+                                      email_service=self.email_service,
+                                      email_to_recieve=self.emails_to_recieve,
                                       proxy_ip=self.requester.proxy_ip,
                                       db_host=self.data_base.host,
                                       db_user=self.data_base.user,
@@ -261,33 +284,33 @@ class KSL_SCRAPER(object):
             the_scraper.data_base.add_object(e)
 
 
-                #     except car.CarFaxHistoryException:
-                #     print(f'no car history available for {unproc_listing.ad_identifier}')
-                # except car.GetBlueBookException:
-                #     print(f"unable to get KBB value for {unproc_listing.ad_identifier}")
-                # except car.LoadCarFaxException:
-                #     print(f'unable to load carfax for {unproc_listing.ad_identifier} -- check your selenium funcs')
-                #
-                #
-                # except unproccessed_listing.BuildUnproccesedListingException:
-                #     print("unable to build unproccessed listing")
-                # except processed_listing.BuildProccessedListingException:
-                #     print(f"unable to build proccessed listing for page {unproc_listing.ad_identifier}")
-                # except seller.BuildSellerException:
-                #     print(f"unable to build seller for page {unproc_listing.ad_identifier}")
-                # except car.BuildCarException:
-                #     print(f"unable to build car with {unproc_listing.ad_identifier}")
-                # except InvalidAdPageURLException:
-                #     print(f"The URL for the Ad Page {unproc_listing.ad_identifier} is not real")
-                #
-                # except PullAdPageDataException:
-                #     print(f"unable to pull neccesary data fields from {unproc_listing.ad_identifier}")
-                # except sql_connection.ExecutionException as e:
-                #     print(e.__str__())
+            #     except car.CarFaxHistoryException:
+            #     print(f'no car history available for {unproc_listing.ad_identifier}')
+            # except car.GetBlueBookException:
+            #     print(f"unable to get KBB value for {unproc_listing.ad_identifier}")
+            # except car.LoadCarFaxException:
+            #     print(f'unable to load carfax for {unproc_listing.ad_identifier} -- check your selenium funcs')
+            #
+            #
+            # except unproccessed_listing.BuildUnproccesedListingException:
+            #     print("unable to build unproccessed listing")
+            # except processed_listing.BuildProccessedListingException:
+            #     print(f"unable to build proccessed listing for page {unproc_listing.ad_identifier}")
+            # except seller.BuildSellerException:
+            #     print(f"unable to build seller for page {unproc_listing.ad_identifier}")
+            # except car.BuildCarException:
+            #     print(f"unable to build car with {unproc_listing.ad_identifier}")
+            # except InvalidAdPageURLException:
+            #     print(f"The URL for the Ad Page {unproc_listing.ad_identifier} is not real")
+            #
+            # except PullAdPageDataException:
+            #     print(f"unable to pull neccesary data fields from {unproc_listing.ad_identifier}")
+            # except sql_connection.ExecutionException as e:
+            #     print(e.__str__())
 
-                # except:
-                #     print('shit')
-                #     print('shit')
+            # except:
+            #     print('shit')
+            #     print('shit')
 
     def load_ad_page(self, ad_number):
         """
@@ -703,5 +726,3 @@ class UnresolvedListingIDException(ScraperException):
         """
         message = f'Unable to pull ID from Unprocessed Listing'
         super().__init__('', message, UnresolvedListingIDException)
-
-

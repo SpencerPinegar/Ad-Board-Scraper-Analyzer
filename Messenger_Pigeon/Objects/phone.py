@@ -1,6 +1,6 @@
 from twilio.rest import Client
 
-class Phone():
+class Phone(object):
     """
     This class is a wrapper for the twilio object so outgoing messages can be customized and sent
     and so incoming messages can be handled
@@ -29,7 +29,7 @@ class Phone():
         """
         if len(body) > 1550:
             body=body[0:1550]
-        for number in Phone.format_number_array(to_number):
+        for number in to_number:
             self.client.messages.create(
                 to=Phone.normalize_number(number),
                 from_=Phone.account_phone_number,
@@ -53,16 +53,3 @@ class Phone():
             raise ValueError("You entered an invalid number for the phone object")
         return number
 
-    @staticmethod
-    def format_number_array(number_array_string: str):
-        """
-        Formats a string representation of numbers to an array of numbers
-        :param number_array_string: The array of numbers expressed as a string
-        :return: The numbers from string as sn array of numbers in strings
-        """
-        number_array_string = number_array_string.split(',')
-        number_array = []
-        for number in number_array_string:
-            number = number.strip().strip("'")
-            number_array.append(number)
-        return number_array

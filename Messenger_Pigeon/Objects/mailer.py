@@ -14,16 +14,18 @@ from smtplib import SMTP
 from email.mime.text import MIMEText
 
 """
-This class uses a gmail mailer
-https://gist.github.com/turicas/1455741
-"""
-
+This class is used objectifies the simple mail transport protocol to make it much more user friendly. 
+It was found at - https://gist.github.com/turicas/1455741
 #!/usr/bin/env python
 # coding: utf-8
 
 # This little project is hosted at: <https://gist.github.com/1455741>
 # Copyright 2011-2012 Álvaro Justen [alvarojusten at gmail dot com]
 # License: GPL <http://www.gnu.org/copyleft/gpl.html>
+
+Thank you Alvaro - great classes.
+"""
+
 
 
 
@@ -113,3 +115,4 @@ class Email_Info(Enum):
     GMAIL = "smtp.gmail.com:587"
     OUTLOOK = "smtp-mail.outlook.com:587"
     OFFICE = "outlook.office365.com"
+
