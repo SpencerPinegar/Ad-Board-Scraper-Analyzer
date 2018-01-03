@@ -20,6 +20,12 @@ from Messenger_Pigeon.Objects import logger
 import time
 import json
 
+spencers_cars = {car.Make.HONDA: {'accord', 'civic', 'odyssey'},
+                 car.Make.TOYOTA: {'all'},
+                 car.Make.NISSAN: {'altima', 'maxima'},
+                 car.Make.SUBARU: {'all'},
+                 }
+
 
 class KSL_SCRAPER(object):
     base_url = 'http://www.ksl.com'  # the base url of the site being scraped
@@ -234,6 +240,8 @@ class KSL_SCRAPER(object):
                         self.logger.log(f"texted deal of car with id of {the_listing.id}")
                     for reciever in self.emails_to_recieve:
                         if reciever == 'NateCarDeals@gmail.com' and ad_car.make is not car.Make.SUBARU:
+                            continue
+                        if reciever == 'SpencerCarDeals@gmail.com' and ad_car.make not in spencers_cars or int(ad_car.price) > 2000 or int(ad_car.price) < 600 or int(ad_car.year) < 1998 or not spencers_cars[ad_car.make].__contains__('all') or not spencers_cars[ad_car.make].__contains__(ad_car._normilized_model_string()):
                             continue
                         email = mailer.Email(self.email_to_send, reciever, subject, deal_info)
                         self.mailer.send(email)
@@ -656,6 +664,10 @@ class KSL_SCRAPER(object):
                     if dict_key_found and dict_value_found:
                         add_details_dictionary[dict_key] = dict_value
         return add_details_dictionary
+
+
+
+
 
 
 class DeletedAdPageURLException(ScraperException):

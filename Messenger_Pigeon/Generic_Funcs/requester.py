@@ -82,11 +82,15 @@ class Requester(object):
             raise InvalidBaseURLException(website.url, website.status_code)
         else:
             if javascript_required:
+
                 if self.proxy_ip:
                     driver = self.create_chrome_driver(ip=proxy)
                 else:
                     driver = self.create_chrome_driver()
-                driver.get(website.url)
+                try:
+                    driver.get(website.url)
+                except:
+                    driver.get(website.url)
                 if xpath_to_look_for != None:
                     try:
                         wait = WebDriverWait(driver, 10)

@@ -109,10 +109,10 @@ def next_page(driver, el_locator, next_el_locator=None, the_long_wait = True):
     :param next_el_locator: The xpath of the expected element on the next page
     :raises: UnexpectedPageLoaded if the element to be found on the next page is not found
     """
-    the_wait = WebDriverWait(driver, 5)
+    the_wait = WebDriverWait(driver, 10)
     next_button = the_wait.until(EC.presence_of_element_located(el_locator), "We could not find the button")
     driver.execute_script("arguments[0].click();", next_button)
-    the_long_wait = WebDriverWait(driver, 10)
+    the_long_wait = WebDriverWait(driver, 15)
     if next_el_locator is not None:
         try:
             if the_long_wait:

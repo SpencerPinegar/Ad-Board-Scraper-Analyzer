@@ -224,7 +224,7 @@ class Car(DataBase_Object):
         """
         popularity_score = 0
         if self.make in Car_Data.popular_cars:
-            model = self._normilized_model_string()
+            model = self._normilized_model_string().lower()
             popular_models = Car_Data.popular_cars[self.make]
             if model in popular_models:
                 popularity_score = popular_models[model]
@@ -234,7 +234,7 @@ class Car(DataBase_Object):
         """
         Checks to see if the car is a bad model year based off consumer reports
         """
-        model = self._normilized_model_string()
+        model = self._normilized_model_string().lower()
         if self.make in Car_Data.bad_car_models_by_year:
             makes_bad_models = Car_Data.bad_car_models_by_year[self.make]
             if model in makes_bad_models:
@@ -249,7 +249,7 @@ class Car(DataBase_Object):
         These statistics are base off of consumer data reports of the longest running cars 
         """
         percentage_over_200K = .65
-        model = self._normilized_model_string()
+        model = self._normilized_model_string().lower()
         if self.make in Car_Data.durable_cars:
             makes_durable_models = Car_Data.durable_cars[self.make]
             if model in makes_durable_models:
@@ -886,6 +886,10 @@ class Car_Data(object):
     the most durable cars, and bad models of cars by year. This data helps decide car metrics that determine
     if it will be flipped or not
     """
+
+
+
+
     # hold car name and then car popularity in last two string parts 0-20
     popular_cars = {Make.HONDA: {'accord': 1, 'civic': .8, 'crv': .45},
                     Make.TOYOTA: {'camry': .95, 'corolla': .85, 'highlander': .3},
@@ -1019,7 +1023,7 @@ class MissingEssentialDataException(ScraperException):
     def __init__(self, fieldname):
         """
         Creates a CarFaxHistoryException
-        :param ad_identifier: The ad identifier associated with the car without carfax vehicle history
+        :param fieldname: The field name associated with the car without carfax vehicle history
         """
         message = f'The essential fieldname {fieldname} was missing'
         super().__init__('', message, MissingEssentialDataException)

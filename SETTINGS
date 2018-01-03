@@ -34,7 +34,7 @@ Email_Password::'GoodCarDeals'
 
  - The Email_To_Notify setting is the email all deals will be sent to. Multiple emails can be notified - seperate them
         with a comma
-Email_To_Notify::'JordanCarDeals@gmail.com, MainCarDeals@gmail.com, NateCarDeals@gmail.com, AlexPCarDeals@gmail.com'
+Email_To_Notify::'JordanCarDeals@gmail.com, MainCarDeals@gmail.com, NateCarDeals@gmail.com, AlexPCarDeals@gmail.com, SpencerCarDeals@gmail.com'
 
  - The Email_Server is the server that corresponds to the specific smtp service you will be using for the
         Email_To_Send, ie gmail, hotmail
