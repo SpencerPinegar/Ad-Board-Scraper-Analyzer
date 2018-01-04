@@ -241,8 +241,10 @@ class KSL_SCRAPER(object):
                     for reciever in self.emails_to_recieve:
                         if reciever == 'NateCarDeals@gmail.com' and ad_car.make is not car.Make.SUBARU:
                             continue
-                        if reciever == 'SpencerCarDeals@gmail.com' and ad_car.make not in spencers_cars or int(ad_car.price) > 2000 or int(ad_car.price) < 600 or int(ad_car.year) < 1998 or not spencers_cars[ad_car.make].__contains__('all') or not spencers_cars[ad_car.make].__contains__(ad_car._normilized_model_string()):
-                            continue
+                        if reciever == 'SpencerCarDeals@gmail.com':
+                            if int(ad_car.price) > 2000 or int(ad_car.price) < 600 or int(ad_car.year) < 1998:
+                                if not spencers_cars.keys().__contains__(ad_car.make) or not spencers_cars[ad_car.make].__contains__('all') or not spencers_cars[ad_car.make].__contains__(ad_car._normilized_model_string()):
+                                    continue
                         email = mailer.Email(self.email_to_send, reciever, subject, deal_info)
                         self.mailer.send(email)
                     self.logger.log("Emailed Good Deal")
