@@ -20,38 +20,38 @@
    INFO
 
     ___  CAR INFO  ___
-    Make: TOYOTA,
-    Model: Camry,
-    Price: 1000,
-    Value: 1980,
-    Mileage: 135000,
-    Title Type: CLEAN,
-    Year: 1998,
-    Trim: ,
-    Condition: E,
-    Color: SILVER
+        Make: TOYOTA,
+        Model: Camry,
+        Price: 1000,
+        Value: 1980,
+        Mileage: 135000,
+        Title Type: CLEAN,
+        Year: 1998,
+        Trim: ,
+        Condition: E,
+        Color: SILVER
 
     ___  CAR ANALYSIS  ___
-    Value Accuracy: 90,
-    Price Dif: 980,
-    ROI: 0.98,
-    Bad Model: false,
-    Popularity: 95.0 - avg 0,
-    Longevity: 26 - avg 11,
-    Make Rating: 78 - avg 50
+        Value Accuracy: 90,
+        Price Dif: 980,
+        ROI: 0.98,
+        Bad Model: false,
+        Popularity: 95.0 - avg 0,
+        Longevity: 26 - avg 11,
+        Make Rating: 78 - avg 50
 
     ____  SELLER INFO ____
-    Name: Lydia,
-    Number: 3852088805,
-    Member Since: 2017-11-01,
+        Name: Lydia,
+        Number: 3852088805,
+        Member Since: 2017-11-01,
 
     ____ AD INFO ____
-    URL: http://www.ksl.com/auto/listing/4362280,
-    Location: HIGHLAND UT,
-    Date Posted: 2018-01-04,
-    Page Views: 1,
-    Page Favs: 0,
-    Info: Car that runs great but needs a bit of fixing up.
+        URL: http://www.ksl.com/auto/listing/4362280,
+        Location: HIGHLAND UT,
+        Date Posted: 2018-01-04,
+        Page Views: 1,
+        Page Favs: 0,
+        Info: Car that runs great but needs a bit of fixing up.
     
 ---------------------------------------------------------------------------------------------------------------------------- 
   
@@ -114,26 +114,26 @@
  
 ----------------------------------------------    Example Log   ---------------------------------------------
    
-loading objects 17:16:34
-objects loaded 17:16:40
-success 17:16:40
-loading objects 17:16:45
-objects loaded 17:16:51
-Should send Car Deal 17:16:51
-Sent deal of car with id of c8eb5aaa-9494-44b9-9451-a2e9783e8766 17:16:52
-success 17:16:53
-loading objects 17:16:58
-objects loaded 17:17:05
-success 17:17:06
-loading objects 17:17:11
-objects loaded 17:18:19
-success 17:18:19
-loading objects 17:18:26
-objects loaded 17:18:32
-Scraper Exception 17:18:33
-loading objects 17:18:38
-objects loaded 17:18:44
-success 17:18:45
-loading objects 17:18:50
-objects loaded 17:18:56
-Processed all listings 17:19:01
+    loading objects 17:16:34
+    objects loaded 17:16:40
+    success 17:16:40
+    loading objects 17:16:45
+    objects loaded 17:16:51
+    Should send Car Deal 17:16:51
+    Sent deal of car with id of c8eb5aaa-9494-44b9-9451-a2e9783e8766 17:16:52
+    success 17:16:53
+    loading objects 17:16:58
+    objects loaded 17:17:05
+    success 17:17:06
+    loading objects 17:17:11
+    objects loaded 17:18:19
+    success 17:18:19
+    loading objects 17:18:26
+    objects loaded 17:18:32
+    Scraper Exception 17:18:33
+    loading objects 17:18:38
+    objects loaded 17:18:44
+    success 17:18:45
+    loading objects 17:18:50
+    objects loaded 17:18:56
+    Processed all listings 17:19:01
