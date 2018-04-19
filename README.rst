@@ -15,7 +15,7 @@
     Based on these metrics a value difference, ROI, and risk can be evaluated for each vehicle. If a car meets a buyers specific ROI, value difference, and risk they will be notified via email. Here is an example notification.
     
     
-         -----------------------------------   Example Notification   ---------------------------------------------
+--------------------------------------------   Example Notification   ---------------------------------------------
      
    INFO
 
@@ -111,8 +111,8 @@
     
     The online error database is used to track events that cause Scraper and Unknown Exceptions, and the relevant data associated with them. When an error occurs, it is handled, classified, and uploaded to the database along with the relevant car ad data. This allows errors to be tracked to specific ads, data upload attempts, or notification attempts. It also allows each modules error rate to be evaluated over the lifespan of the program.
 
-   
-           ----------------------------------    Example Log   ---------------------------------------------
+ 
+----------------------------------------------    Example Log   ---------------------------------------------
    
 loading objects 17:16:34
 objects loaded 17:16:40
