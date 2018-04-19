@@ -1,5 +1,4 @@
-
----------------------------------------   Ad-Board-Scraper-Analyzer  ------------------------------------------------------
+---------------------------------------   Ad-Board-Scraper-Analyzer  ------------------------------------------------
 
 
     This project is a web-scraper for KSL Cars ad board. It consistently runs pulling new ad listings from KSL Cars Classifieds. When it has all of the new listings it automatically processes them; evaluating the accuracy of each listings using Levenshtein string comparison, representing each listing as a car object. 
@@ -7,13 +6,13 @@
     Once the car object is built the program analyzes each car object to determine it's value and the risk. The following metrics are used to evaluate each car:
     - The VIN is checked against Carfax to estimate the cars individual value based on known condition 
     - The car is run through Kelly Blue Book to determine it's value based on local comparables with similar mileage
-    - The car is run through the Consumer Reports database to check if the model year had a disproportional amount of         defects
+    - The car is run through the Consumer Reports database to check if the model year had a disproportional amount of  defects
     - The life expectancy of the car is scaled based on the percentage of cars of that model that drove more than 200K miles on the road.
     - The seller of the car is tracked based on phone number so purchases from unlicensed resellers can be avoided
     - The Manufacturer of each car is evaluated based on reviews from Consumer Reports
     - The Popularity of the car is ranked based on reviews from Consumer Reports.
     
-    Based on these metrics a value difference, ROI, and risk can be evaluated for each vehicle. If a car meets a buyers specific ROI, value difference, and risk they will be notified via email. Here is an example of a notification.
+    Based on these metrics a value difference, ROI, and risk can be evaluated for each vehicle. If a car meets a buyers specific ROI, value difference, and risk they will be notified via email. Here is an example notification.
     
     
          -----------------------------------   Example Notification   ---------------------------------------------
@@ -63,10 +62,10 @@
 
 
 1. You must have a mySQL database set up with 4 tables within it - I call this Database KSL_WebScraper:
-    First, set up an independent database using the SQL table templates. After this is done you can customize connection         settings in the setting.txt file. This allows the web scraper to accumilate data so you can make a more informed             decision when buying your vehicle
+    First, set up an independent database using the SQL table templates. After this is done you can customize connection settings in the setting.txt file. This allows the web scraper to accumulate data so you can make a more informed decision when buying your vehicle
 
 2. Set up Twilio/Email:
-    To be notified of the good deals you must have a Twilio or Gmail account. This can easily be done, go to twilio's           website and applying for a twilio api key and password. When this is set up you can enter the relevant information into     the settings.txt file. 
+    To be notified of the good deals you must have a Twilio or Gmail account. This can easily be done, go to twilio's website and applying for a twilio API key and password. When this is set up you can enter the relevant information into the settings.txt file. 
 
 
 3. Finish Customizing the Settings file:
@@ -74,11 +73,6 @@
 
 ---------------------------------------------------   Usage   --------------------------------------------------------------
 
-
-    The KSL_Scraper is meant to be run 24/7 - so Error handling is a must. You will be able to see different types of
-    errors through the console. A single "Error" in the Error Log signifies there was an unknown issue when processing the pulled listings.
-    These are not uncommon but should occur at a rate of less than 1-10. Other issues such as the scraper being unable
-    to build a certain listings car will be displayed as well.
 
     The Scraper can be started by running the scrape.py file from the command line.
 
@@ -88,34 +82,34 @@
     3. type python3 scrape.py
     
     
-----------------------------------------------  Run Continuosly  -----------------------------------------------------------
+----------------------------------------------  Run Continuously  -------------------------------------------------------
 
-    This will run continuosly on your computer. Network conditions may cause the system to fail - Because of this of this a chron job should be scheduled to:
+    This will run continuously on your computer. Network conditions may cause the system to fail - Because of this of this a chron job should be scheduled to:
 
     1. Check the status of the program
     2. If the program has crashed - simply run scrape.py
     3. If the program is currently running allow it to continue
     
    
-   An additional chron job to can be added to run the program during non peak hours in intervals. This will limit the amount of network requests sent and shrink you digital footprint - and its enviormentally friendly.
+   An additional chron job to can be added to run the program during non-peak hours in intervals. This will limit the amount of network requests sent and shrink your digital footprint - and its environmentally friendly.
    
    
-----------------------------------   Error Logging and System Preformance    -----------------------------------------------
+----------------------------------   Error Logging and System Performance    ------------------------------------
 
-    The program is monitored in by both a local system log  and an online error database so system preformance and points of failure can be tracked on multiple levels. 
+    The program is monitored by both a local system log and an online error database so system performance and points of failure can be tracked on multiple levels. 
     
-    The local system log monitors the basic proccesess of the program so system preformance and points of failure can be monitored from a modular level. Important process names and thier start times are loaded to a .txt file into a Log folder that is created when the program is initially run (if it does not exist). ErrorsThere is an example log provided below.
+    The local system log monitors the basic processes from a modular level. Important process names and their start times are loaded to a {date}.txt file into a Log folder that is created when the program is initially run (if it does not exist). There is an example log provided below.
     
     - loading objects - The ad page data is being extracted and transformed into relevant objects (See Objects section)
-    - objects loaded - The objects were succesfully loaded into the database
+    - objects loaded - The objects were successfully loaded into the database
     - Should send Car Deal - The objects met specification and the relevant email should be notified
-    - Sent Deal of Car - The relevant email was succesfully notified
-    - success - An ad car page was succesfully proccessed
-    - Processed all listings - All current listings posted on the ad board have been proccessed
-    - Scraper Exception - A known exception occured and was succesfully handled
-    - Unknown Exception - An unknown exception occured
+    - Sent Deal of Car - The relevant email was successfully notified
+    - success - An ad car page was successfully processed
+    - Processed all listings - All current listings posted on the ad board have been processed
+    - Scraper Exception - A known exception occurred and was successfully handled
+    - Unknown Exception - An unknown exception occurred but was successfully handled
     
-    The online error database is used to track events that cause Scraper Exceptions, and the relevant data assosiated with them. When an error occurs it is handled, classified, and uploaded to the database along with the relevant car ad data. This allows errors to be tracked to specific ads, data upload attempts, or notification attempts. It also allows each modules error rate to be evaluated over the lifespan of the program.
+    The online error database is used to track events that cause Scraper and Unknown Exceptions, and the relevant data associated with them. When an error occurs, it is handled, classified, and uploaded to the database along with the relevant car ad data. This allows errors to be tracked to specific ads, data upload attempts, or notification attempts. It also allows each modules error rate to be evaluated over the lifespan of the program.
 
    
            ----------------------------------    Example Log   ---------------------------------------------
