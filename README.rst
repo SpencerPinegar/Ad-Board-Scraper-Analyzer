@@ -1,5 +1,5 @@
 
----------------------------------------   Ad-Board-Scraper-Analyzer  -------------------------------------------------------
+---------------------------------------   Ad-Board-Scraper-Analyzer  ------------------------------------------------------
 
 
     This project is a web-scraper for KSL Cars ad board. It consistently runs pulling new ad listings from KSL Cars Classifieds. When it has all of the new listings it automatically processes them; evaluating the accuracy of each listings using Levenshtein string comparison, representing each listing as a car object. 
@@ -21,7 +21,7 @@
    INFO
 
     ___  CAR INFO  ___
-    Make: TOYOTA,\n
+    Make: TOYOTA, \r\n
     Model: Camry,
     Price: 1000,
     Value: 1980,
