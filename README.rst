@@ -21,7 +21,7 @@
    INFO
 
     ___  CAR INFO  ___
-    Make: TOYOTA,
+    Make: TOYOTA,\n
     Model: Camry,
     Price: 1000,
     Value: 1980,
